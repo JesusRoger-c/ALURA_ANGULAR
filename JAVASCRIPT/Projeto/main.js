@@ -1,6 +1,13 @@
-function tocaSom (idElementoAudio){     //Declaracao de função
-   document.querySelector(idElementoAudio).play();
-} 
+function tocaSom (seletorAudio){     //Declaracao de função
+   const elemento = document.querySelector(seletorAudio); //criando uma constante que Busca algum seletor 
+
+   if (elemento != null && elemento.localName === 'audio'){
+      elemento.play();
+   }else{
+      alert('Elemento não encontrado');
+   }
+
+}
 
 
 const listaDeTeclas = document.querySelectorAll('.tecla');  //Criando uma lista constante
