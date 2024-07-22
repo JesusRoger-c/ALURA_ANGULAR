@@ -5,7 +5,30 @@ const longoBt = document.querySelector('.app__card-button--longo')
 const banner = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
-const musicFoco = document.getElementById('alternar-musica')
+const tempo = document.getElementById('start-pause')
+
+
+const musicFocoInput = document.getElementById('alternar-musica')
+const musica = new Audio('sons/luna-rise-part-one.mp3')
+
+
+let tempoDecorridoSegundos = 5
+let intervaloId = null
+
+
+
+musica.loop = true //Quero que a musica fique tocando repedidas vezes 
+
+musicFocoInput.addEventListener('change', () => {
+    if(musica.paused){
+        musica.play()
+    }else{
+        musica.pause()
+    }
+
+})
+
+
 
 
 focoBt.addEventListener('click', () => {
@@ -57,4 +80,18 @@ function alterarContexto(contexto) {            //Parametro (contexto) para perc
             break;
     }
 
+}
+
+
+//Temporizador
+const contagemRegressiva = () => {
+    iniciar()   //Referenciando o novo método
+    tempoDecorridoSegundos -= 1  // Tirando valor (Decrementado o valor do temporizador) 
+ }
+
+tempo.addEventListener('click', contagemRegressiva)
+
+
+function iniciar(){
+    intervaloId = setInterval(contagemRegressiva, 1000)     // Método responsável por executar alguma função em um dterminado período de tempo 
 }
