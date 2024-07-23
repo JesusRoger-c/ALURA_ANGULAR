@@ -6,10 +6,18 @@ const banner = document.querySelector('.app__image')
 const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const tempo = document.getElementById('start-pause')
-
-
 const musicFocoInput = document.getElementById('alternar-musica')
+
+
+
+
+
+
+
 const musica = new Audio('sons/luna-rise-part-one.mp3')
+const musicaPlay = new Audio('sons/play.wav')
+const musicaPause = new Audio ('sons/pause.mp3')
+const musicabeep = new Audio ('beep.mp3')
 
 
 let tempoDecorridoSegundos = 5
@@ -18,6 +26,11 @@ let intervaloId = null
 
 
 musica.loop = true //Quero que a musica fique tocando repedidas vezes 
+musicaPlay.loop = true
+musicaPause.loop = true
+musicabeep.loop = true
+
+
 
 musicFocoInput.addEventListener('change', () => {
     if(musica.paused){
@@ -25,7 +38,6 @@ musicFocoInput.addEventListener('change', () => {
     }else{
         musica.pause()
     }
-
 })
 
 
@@ -85,13 +97,29 @@ function alterarContexto(contexto) {            //Parametro (contexto) para perc
 
 //Temporizador
 const contagemRegressiva = () => {
-    iniciar()   //Referenciando o novo método
+    if(tempoDecorridoSegundos <= 0){
+    zerar()
+    return
+    }
+    iniciarouPausar()   //Referenciando o novo método
     tempoDecorridoSegundos -= 1  // Tirando valor (Decrementado o valor do temporizador) 
+    console.log('Temporizador: ' + tempoDecorridoSegundos)
  }
 
-tempo.addEventListener('click', contagemRegressiva)
+tempo.addEventListener('click', iniciarouPausar) 
 
 
-function iniciar(){
+
+
+function iniciarouPausar(){
+    if(intervaloId){
+        zerar()
+        return
+    }
     intervaloId = setInterval(contagemRegressiva, 1000)     // Método responsável por executar alguma função em um dterminado período de tempo 
+}
+
+function zerar() {
+    clearInterval(intervaloId)
+    intervaloId = null
 }
