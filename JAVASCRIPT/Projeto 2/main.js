@@ -7,8 +7,9 @@ const titulo = document.querySelector('.app__title')
 const botoes = document.querySelectorAll('.app__card-button')
 const tempo = document.getElementById('start-pause')
 const musicFocoInput = document.getElementById('alternar-musica')
-
-
+const iniciarouPausarBt = document.querySelector('#start-pause span')
+const iniciarouPausarIcone = document.querySelector('.app__card-primary-butto-icon') 
+const tempoNaTela = document.getElementById('timer')
 
 
 
@@ -17,19 +18,15 @@ const musicFocoInput = document.getElementById('alternar-musica')
 const musica = new Audio('sons/luna-rise-part-one.mp3')
 const musicaPlay = new Audio('sons/play.wav')
 const musicaPause = new Audio ('sons/pause.mp3')
-const musicabeep = new Audio ('beep.mp3')
+const musicabeep = new Audio ('sons/beep.mp3')
 
 
-let tempoDecorridoSegundos = 5
+let tempoDecorridoSegundos = 1500
 let intervaloId = null
 
 
 
 musica.loop = true //Quero que a musica fique tocando repedidas vezes 
-musicaPlay.loop = true
-musicaPause.loop = true
-musicabeep.loop = true
-
 
 
 musicFocoInput.addEventListener('change', () => {
@@ -98,12 +95,13 @@ function alterarContexto(contexto) {            //Parametro (contexto) para perc
 //Temporizador
 const contagemRegressiva = () => {
     if(tempoDecorridoSegundos <= 0){
+    //musicabeep.play()
+    alert('Tempo Finalizado !')
     zerar()
     return
     }
-    iniciarouPausar()   //Referenciando o novo método
     tempoDecorridoSegundos -= 1  // Tirando valor (Decrementado o valor do temporizador) 
-    console.log('Temporizador: ' + tempoDecorridoSegundos)
+    mostrarTempo()
  }
 
 tempo.addEventListener('click', iniciarouPausar) 
@@ -113,13 +111,26 @@ tempo.addEventListener('click', iniciarouPausar)
 
 function iniciarouPausar(){
     if(intervaloId){
+        musicaPause.play()
         zerar()
         return
     }
+    musicaPlay.play()
+    iniciarouPausarBt.innerHTML = `Pausar`  //é interessante utilizar o "TEXTCONTENT" para ter a mesma finalidade que o inner
+    iniciarouPausarIcone.setAttribute('src', 'imagens/pause.png') //Trocar a Imagem
     intervaloId = setInterval(contagemRegressiva, 1000)     // Método responsável por executar alguma função em um dterminado período de tempo 
 }
 
 function zerar() {
     clearInterval(intervaloId)
+    iniciarouPausarBt.textContent = "Começar"
+    iniciarouPausarIcone.setAttribute('src', 'imagens/play_arrow.png')
     intervaloId = null
 }
+
+function mostrarTempo (){
+    const tempo = new Date(tempoDecorridoSegundos * 1000)
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: ''} )
+    tempoNaTela.innerHTML = `${tempo}` //Aqui estamos exibindo no HTML o tempo que declaramos no tempoDecorridoSegundos
+}
+mostrarTempo()
