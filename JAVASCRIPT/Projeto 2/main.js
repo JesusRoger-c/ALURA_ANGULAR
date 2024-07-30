@@ -41,23 +41,27 @@ musicFocoInput.addEventListener('change', () => {
 
 
 focoBt.addEventListener('click', () => {
+    tempoDecorridoSegundos = 1500
     alterarContexto('foco')   // Chamando função para trocar a imagem ao clicar
     focoBt.classList.add('active') // Adicionando uma classe do css/hml neste botão
 })
 
 
 curtoBt.addEventListener('click', () => {
+    tempoDecorridoSegundos = 300
     alterarContexto('descanso-curto')
     curtoBt.classList.add('active')
 })
 
 
 longoBt.addEventListener('click', () => {
+    tempoDecorridoSegundos = 900
     alterarContexto('descanso-longo')
     longoBt.classList.add('active')
 })
 
 function alterarContexto(contexto) {            //Parametro (contexto) para percorrer o código e encontrar
+    mostrarTempo()
     botoes.forEach(function (contexto) {
         contexto.classList.remove('active')
     });
@@ -95,7 +99,7 @@ function alterarContexto(contexto) {            //Parametro (contexto) para perc
 //Temporizador
 const contagemRegressiva = () => {
     if(tempoDecorridoSegundos <= 0){
-    //musicabeep.play()
+    musicabeep.play()
     alert('Tempo Finalizado !')
     zerar()
     return
@@ -130,7 +134,7 @@ function zerar() {
 
 function mostrarTempo (){
     const tempo = new Date(tempoDecorridoSegundos * 1000)
-    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: ''} )
-    tempoNaTela.innerHTML = `${tempo}` //Aqui estamos exibindo no HTML o tempo que declaramos no tempoDecorridoSegundos
+    const tempoFormatado = tempo.toLocaleTimeString('pt-br', {minute: '2-digit', second: '2-digit'} ) 
+    tempoNaTela.innerHTML = `${tempoFormatado}` //Aqui estamos exibindo no HTML o tempo que declaramos no tempoDecorridoSegundos
 }
 mostrarTempo()
