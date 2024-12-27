@@ -1,5 +1,4 @@
-console.log(axios);
-const containerVideos = document.querySelector(".videos__container");
+ const containerVideos = document.querySelector(".videos__container");
 
 
 async function buscarEMostrarVideos(){
