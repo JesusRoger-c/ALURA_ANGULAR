@@ -1,4 +1,4 @@
-                                                APLIAÇÃO WEB COM TS, JS, HTML E CSS 
+                                                   APLIAÇÃO WEB COM TS, JS, HTML E CSS 
 
 - Javascript
 - Typescript
