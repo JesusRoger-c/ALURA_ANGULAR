@@ -1,11 +1,3 @@
-let saldo = 3000.00;
-alert("testando ts");
-//Selecione o saldo-valor e Procure o elemento valor  
-const elementoSaldo = document.querySelector(".saldo-valor .valor");
-//Checando se o elemento é nulo
-if (elementoSaldo != null) { //elemento não for nulo 
-    elementoSaldo.textContent = saldo.toString(); // executa tal ação 
-}
 // Procuro o elemento form e adicionarei um evento que trata-se de subir os dados sem que necessariamente precise atualizar a tela  
 const elementoFormulario = document.querySelector(".block-nova-transacao form"); // ele coloca que sabe que vem do html este dado, sendo assim, não causa erros do código
 elementoFormulario.addEventListener("submit", function (event) {
