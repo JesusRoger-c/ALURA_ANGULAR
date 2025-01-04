@@ -1,10 +1,12 @@
 // Aqui ficará o formatador de valores de moeda e data 
+import { FormatoData } from "../Types/FormatoData.js";
 
-function formatarMoeda (valor:number) : string{
+
+export function formatarMoeda (valor:number) : string{  // Comando export para deixar visivel na importação 
     return valor.toLocaleString("pt-br", {style: "currency", currency: "BRL"});
 }
 
-function formatarData( data: Date, formato: FormatoData = FormatoData.PADRAO): string{ 
+export function formatarData( data: Date, formato: FormatoData = FormatoData.PADRAO): string{ 
     if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO){
 
     return data.toLocaleDateString("pt-br", {

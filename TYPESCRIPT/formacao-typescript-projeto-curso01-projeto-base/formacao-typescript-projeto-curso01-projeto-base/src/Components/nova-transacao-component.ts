@@ -1,3 +1,9 @@
+// importando
+import { formatarMoeda } from "../Utils/formatadores.js";
+import { Transacao } from "../Types/Transacao.js";
+import { TipoTransacao } from "../Types/TipoTransacao.js";
+
+
 // Procuro o elemento form e adicionarei um evento que trata-se de subir os dados sem que necessariamente precise atualizar a tela  
 const elementoFormulario = document.querySelector(".block-nova-transacao form") as HTMLFormElement; // ele coloca que sabe que vem do html este dado, sendo assim, não causa erros do código
 elementoFormulario.addEventListener("submit", function(event) {

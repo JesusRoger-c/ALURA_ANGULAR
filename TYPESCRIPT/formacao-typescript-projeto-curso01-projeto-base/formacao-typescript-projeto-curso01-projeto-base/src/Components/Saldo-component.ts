@@ -1,3 +1,6 @@
+import { FormatoData } from "../Types/FormatoData.js";
+import { formatarData, formatarMoeda } from "../Utils/formatadores.js";
+
 let saldo: number = 3000;
 
 //Selecione o saldo-valor e Procure o elemento valor  

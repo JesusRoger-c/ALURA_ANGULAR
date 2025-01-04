@@ -1,8 +1,8 @@
 // Aqui ficará o formatador de valores de moeda e data 
-function formatarMoeda(valor) {
+export function formatarMoeda(valor) {
     return valor.toLocaleString("pt-br", { style: "currency", currency: "BRL" });
 }
-function formatarData(data, formato = FormatoData.PADRAO) {
+export function formatarData(data, formato = FormatoData.PADRAO) {
     if (formato === FormatoData.DIA_SEMANA_DIA_MES_ANO) {
         return data.toLocaleDateString("pt-br", {
             weekday: "long",
