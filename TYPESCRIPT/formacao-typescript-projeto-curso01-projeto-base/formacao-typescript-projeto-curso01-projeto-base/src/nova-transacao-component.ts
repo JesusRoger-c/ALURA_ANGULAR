@@ -31,8 +31,7 @@ elementoFormulario.addEventListener("submit", function(event) {
 
 
    //Estou atualizando o painel de valores de acordo com a transacao 
-   elementoSaldo.textContent = saldo.toString();
-
+   elementoSaldo.textContent = formatarMoeda(saldo);
     //Criação de um objeto com a finalidade de armazenar as informações obtidas
     const novaTransacao: Transacao =  {
     tipoTransacao: tipoTransacao,
