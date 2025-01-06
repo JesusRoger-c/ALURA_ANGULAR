@@ -1,7 +1,8 @@
 // importando
-import { formatarMoeda } from "../Utils/formatadores.js";
 import { Transacao } from "../Types/Transacao.js";
 import { TipoTransacao } from "../Types/TipoTransacao.js";
+import  SaldoComponent from "./Saldo-component.js";
+import Conta from "../Types/Conta.js";
 
 
 // Procuro o elemento form e adicionarei um evento que trata-se de subir os dados sem que necessariamente precise atualizar a tela  
@@ -23,29 +24,18 @@ elementoFormulario.addEventListener("submit", function(event) {
     let tipoTransacao: TipoTransacao = inputTipoTransacao.value as TipoTransacao; // Encontrar o valor registrado no formulário (Tipo transacao) 
     let valor: number = inputValor.valueAsNumber;         // declarando variavel como número e atualizando a fonte de pesquisa com conversão de dados 
     let data: Date = new Date(inputData.value);
+    
 
-   
-    //Validação de valores 
-    if(tipoTransacao == TipoTransacao.DEPOSITO){
-      saldo += valor;
-    }else if(tipoTransacao == TipoTransacao.TRANSFERÊNCIA || tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO){
-      saldo -= valor;
-    }else{
-      alert("Transacao inválida");
-      return;
-    }
-
-
-   //Estou atualizando o painel de valores de acordo com a transacao 
-   elementoSaldo.textContent = formatarMoeda(saldo);
     //Criação de um objeto com a finalidade de armazenar as informações obtidas
     const novaTransacao: Transacao =  {
     tipoTransacao: tipoTransacao,
     valor: valor,
     data: data
     }
-
-    console.log(novaTransacao);
+    
+    //Chamando o método conta para registrar, ou seja, puxando info de outro módulo 
+    Conta. registrarTransacao(novaTransacao);
+    SaldoComponent. atualizar();
     elementoFormulario.reset(); // Uma vez que eu puxei os dados, deve ser resetado o formulario 
     
 });
