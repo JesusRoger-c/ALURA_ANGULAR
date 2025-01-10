@@ -6,3 +6,4 @@ import "./Types/FormatoData.js";
 import "./Types/TipoTransacao.js";
 import "./Types/Transacao.js";
 import "./Utils/formatadores.js";
+import "./Components/extrato-componets.js";
