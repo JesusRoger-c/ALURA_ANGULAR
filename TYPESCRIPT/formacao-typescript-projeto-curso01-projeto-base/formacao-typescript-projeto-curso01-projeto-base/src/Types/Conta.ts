@@ -1,6 +1,7 @@
 //  Aplicar orientação a objetos em Typescript
 
 import { Armazenador } from "./Armazenador.js";
+import { ValidaDebito } from "./Decorators.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js"
@@ -8,9 +9,9 @@ import { Transacao } from "./Transacao.js"
 //Criação de uma classe 
 
 export class Conta{
-    nome: string
-    private saldo: number = Armazenador.obter("saldo") || 0;
-    private transacoes: Transacao[] = JSON.parse(localStorage.getItem("transacoes"), (key: string, value: any)=> {
+    protected nome: string
+    protected saldo: number = Armazenador.obter<number>("saldo") || 0;
+    private transacoes: Transacao[] = Armazenador.obter<Transacao[]>(("transacoes"), (key: string, value: any)=> {
         if(key === "data"){
             return new Date (value);
         }
@@ -75,20 +76,14 @@ export class Conta{
       
          this.transacoes.push(novaTransacao);
          console.log(this.getGruposTransacoes());
-         localStorage.setItem("transacoes", JSON.stringify(this.transacoes));
+         //Puxando o Armazenador, pegamos o método de salvar 
+         Armazenador.salvar("transacoes", JSON.stringify(this.transacoes));
         }
-
+        
+        @ValidaDebito
         debitar(valor: number):void{
-            if(valor <= 0 ){
-               throw new Error("Valor que deve ser debitado é maior que zero!");
-            }
-          
-            if(valor > this.saldo){
-              throw new Error("Saldo Insulficiente!");
-            }
-          
             this.saldo -= valor;
-            localStorage.setItem("saldo", this.saldo.toString());
+            Armazenador.salvar("saldo", this.saldo.toString());
           }
 
           depositar(valor: number): void{
@@ -96,13 +91,29 @@ export class Conta{
               throw new Error("Valor que deve ser depositado é maior que zero!");
             }
             this.saldo += valor;
-            localStorage.setItem("saldo", this.saldo.toString());
+           Armazenador.salvar("saldo", this.saldo.toString());
           
           }
 }
 
+// EXTENDS - Herança
+export class ContaPremium extends Conta{
+
+  registraTransacao(transacao: Transacao): void {
+    if(transacao.tipoTransacao === TipoTransacao.DEPOSITO){
+      console.log("Parabéns, você ganhou um bônus de 0.50");
+      transacao.valor += 0.5
+    }
+    
+    // Quando quero usar algo da minha classe pai, nesse caso classe Conta 
+    super.registrarTransacao(transacao)
+  }
+}
+
+
 const conta = new Conta("Roger Gabriel de Souza de Jesus Costa");
 
+const contaPremium = new ContaPremium ("Rian Vitor");
 
 export default conta;
 
