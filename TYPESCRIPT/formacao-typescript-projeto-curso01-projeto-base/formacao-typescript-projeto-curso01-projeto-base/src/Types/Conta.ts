@@ -1,7 +1,7 @@
 //  Aplicar orientação a objetos em Typescript
 
 import { Armazenador } from "./Armazenador.js";
-import { ValidaDebito } from "./Decorators.js";
+import { ValidaDebito, ValidaDeposito } from "./Decorators.js";
 import { GrupoTransacao } from "./GrupoTransacao.js";
 import { TipoTransacao } from "./TipoTransacao.js";
 import { Transacao } from "./Transacao.js"
@@ -85,11 +85,9 @@ export class Conta{
             this.saldo -= valor;
             Armazenador.salvar("saldo", this.saldo.toString());
           }
-
+          
+          @ValidaDeposito
           depositar(valor: number): void{
-            if(valor <= 0){
-              throw new Error("Valor que deve ser depositado é maior que zero!");
-            }
             this.saldo += valor;
            Armazenador.salvar("saldo", this.saldo.toString());
           
